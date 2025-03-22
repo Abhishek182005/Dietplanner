@@ -1,0 +1,97 @@
+/* core/static/core/css/style.css */
+
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #8BC34A;
+    --dark-color: #2E7D32;
+    --light-color: #E8F5E9;
+    --gray-color: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Override Bootstrap primary color */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
+    padding: 4rem 0;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Custom footer */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 2rem 0;
+}
+
+/* Custom styles for form elements */
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
+/* Responsive images */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Custom styles for recipe cards */
+.recipe-card {
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Custom bullet points for benefits list */
+.benefits-list li::before {
+    content: "✓";
+    color: var(--primary-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
