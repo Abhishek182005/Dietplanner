@@ -43,12 +43,6 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
     instructions = models.TextField()
     preparation_time = models.IntegerField(help_text="Time in minutes")
-    image = models.ImageField(
-        upload_to='recipes/',
-        null=True,
-        blank=True,
-        help_text="Upload an image of the prepared dish"
-    )
     
     def __str__(self):
         return self.name
