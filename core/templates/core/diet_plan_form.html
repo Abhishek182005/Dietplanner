@@ -1,0 +1,68 @@
+<!-- core/templates/core/diet_plan_form.html -->
+
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Create Your Personalized Diet Plan - Fuel My Semester{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h4 mb-0">Create Your Personalized Diet Plan</h2>
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Please provide your information to generate a diet plan tailored to your needs.</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                            {{ form.name }}
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.age.id_for_label }}" class="form-label">Age</label>
+                                {{ form.age }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.gender.id_for_label }}" class="form-label">Gender</label>
+                                {{ form.gender }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.height.id_for_label }}" class="form-label">Height (cm)</label>
+                                {{ form.height }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.weight.id_for_label }}" class="form-label">Weight (kg)</label>
+                                {{ form.weight }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.user_type.id_for_label }}" class="form-label">Are you a:</label>
+                            {{ form.user_type }}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.activity_level.id_for_label }}" class="form-label">Activity Level</label>
+                            {{ form.activity_level }}
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Generate My Diet Plan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

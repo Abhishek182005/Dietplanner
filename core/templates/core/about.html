@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}About Us - Fuel My Semester{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">About Fuel My Semester</h1>
+    
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <p class="lead">We're on a mission to help busy students and working professionals eat healthier without sacrificing time, money, or taste.</p>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Our Mission</h2>
+                </div>
+                <div class="card-body">
+                    <p>At Fuel My Semester, we believe that eating well shouldn't be complicated, expensive, or time-consuming. Our mission is to empower busy students and working professionals with the tools, knowledge, and resources they need to make healthier food choices that fit their lifestyle.</p>
+                    
+                    <p>We understand the unique challenges faced by those balancing academic or professional demands with personal well-being. That's why we've created a platform that offers:</p>
+                    
+                    <ul>
+                        <li>Personalized nutrition plans based on individual needs and preferences</li>
+                        <li>Quick, affordable, and nutritious recipes designed for busy schedules</li>
+                        <li>Evidence-based guidance on mindful eating practices</li>
+                        <li>A supportive community of like-minded individuals</li>
+                    </ul>
+                    
+                    <p>Our goal is to help you establish sustainable eating habits that will support your health and well-being throughout your academic or professional journey and beyond.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Our Team</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'core/images/team-1.png' %}" alt="Team Member" class="rounded-circle mb-3" width="120">
+                                <h3 class="h6">Dr. Emily Chen</h3>
+                                <p class="small text-muted">Founder & Registered Dietitian</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'core/images/team-2.png' %}" alt="Team Member" class="rounded-circle mb-3" width="120">
+                                <h3 class="h6">Michael Rodriguez</h3>
+                                <p class="small text-muted">Sports Nutritionist</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'core/images/team-3.png' %}" alt="Team Member" class="rounded-circle mb-3" width="120">
+                                <h3 class="h6">Sarah Johnson</h3>
+                                <p class="small text-muted">Chef & Recipe Developer</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'core/images/team-4.png' %}" alt="Team Member" class="rounded-circle mb-3" width="120">
+                                <h3 class="h6">Dr. David Kim</h3>
+                                <p class="small text-muted">Mindfulness Coach</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-center mt-2">Our team includes registered dietitians, nutritionists, chefs, and wellness experts who are passionate about making healthy eating accessible to everyone.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Connect With Us</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <h3 class="h6">Join Our Community</h3>
+                            <p>Connect with other users in our forum to share recipes, tips, and support each other on your nutrition journey.</p>
+                            <a href="#" class="btn btn-primary">Visit Forum</a>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="h6">Get Expert Support</h3>
+                            <p>Have questions? Our team of registered dietitians is here to help. Schedule a consultation or browse our FAQ.</p>
+                            <a href="#" class="btn btn-outline-primary">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

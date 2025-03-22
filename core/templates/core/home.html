@@ -1,0 +1,87 @@
+<!-- core/templates/core/home.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}Fuel My Semester - Healthy Eating Made Easy{% endblock %}
+
+{% block content %}
+<section class="hero bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold">Fuel Your Semester Right</h1>
+                <p class="lead">Personalized nutrition plans for busy students and working professionals.</p>
+                <a href="{% url 'diet_plan_form' %}" class="btn btn-light btn-lg">Get Your Diet Plan</a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'core/images/diet.jpeg' %}" alt="Healthy Food" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">How It Works</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5 card-title">1. Share Your Info</h3>
+                        <p class="card-text">Tell us about yourself so we can create a plan that fits your unique needs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5 card-title">2. Get Your Plan</h3>
+                        <p class="card-text">Receive a personalized diet plan based on your lifestyle and nutritional needs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5 card-title">3. Access Recipes</h3>
+                        <p class="card-text">Discover easy-to-make recipes designed for busy schedules and limited budgets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Users Say</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">"As a busy engineering student, I never had time to plan healthy meals. Fuel My Semester made it easy to eat better while staying on budget."</p>
+                        <p class="fw-bold mb-0">- Alex, Computer Science Student</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">"The personalized meal plans helped me balance my nutrition while working long hours. I have more energy and focus throughout the day."</p>
+                        <p class="fw-bold mb-0">- Jamie, Marketing Professional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to fuel your semester?</h2>
+        <a href="{% url 'diet_plan_form' %}" class="btn btn-primary btn-lg">Create Your Diet Plan</a>
+    </div>
+</section>
+{% endblock %}

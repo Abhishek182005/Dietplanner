@@ -1,0 +1,248 @@
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block title %}Easy & Healthy Recipes - Fuel My Semester{% endblock %}
+
+{% block extra_css %}
+<style>
+    .recipe-image-container {
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .recipe-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .recipe-image-placeholder {
+        height: 200px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    {% bootstrap_messages %}
+
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <h1 class="mb-3">Easy & Healthy Recipes</h1>
+            <p class="lead">Discover quick and nutritious recipes perfect for busy schedules. All recipes use simple, affordable ingredients and can be prepared in 30 minutes or less.</p>
+        </div>
+        <div class="col-lg-4">
+            <form method="get" class="mt-3 mt-lg-0">
+                <div class="input-group">
+                    {% bootstrap_field form.search show_label=False placeholder="Search recipes..." wrapper_class="mb-0" %}
+                    {% bootstrap_button "Search" button_type="submit" button_class="btn-primary" %}
+                </div>
+                
+                <!-- Preserve ingredient selection when searching -->
+                {% for ingredient_id in selected_ingredients %}
+                <input type="hidden" name="ingredients" value="{{ ingredient_id }}">
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="h4 mb-4">Filter by Ingredients</h2>
+            <form method="get" id="ingredient-form">
+                <!-- Preserve search query when filtering by ingredients -->
+                {% if form.search.value %}
+                <input type="hidden" name="search" value="{{ form.search.value }}">
+                {% endif %}
+                
+                <div class="row g-3">
+                    {% for ingredient in ingredients %}
+                    <div class="col-6 col-md-4 col-lg-3 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <div class="form-check">
+                                    <input type="checkbox" 
+                                        name="ingredients" 
+                                        value="{{ ingredient.id }}" 
+                                        class="form-check-input" 
+                                        id="ingredient-{{ ingredient.id }}"
+                                        {% if ingredient.id|stringformat:"s" in selected_ingredients %}checked{% endif %}
+                                        onchange="this.form.submit()">
+                                    <label class="form-check-label h6 mb-0" for="ingredient-{{ ingredient.id }}">
+                                        {{ ingredient.name }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="card-body p-3">
+                                <p class="card-text small mb-2">
+                                    <span class="badge bg-info text-white">Used in {{ ingredient.recipe_count }} recipe(s)</span>
+                                </p>
+                                <p class="card-text small mb-2">{{ ingredient.description|truncatechars:60 }}</p>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" 
+                                    data-bs-target="#nutritional-{{ ingredient.id }}" aria-expanded="false">
+                                    Nutritional Info
+                                </button>
+                                <div class="collapse mt-2" id="nutritional-{{ ingredient.id }}">
+                                    <div class="card card-body p-2 bg-light">
+                                        <small>{{ ingredient.nutritional_value|linebreaks }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        {% bootstrap_alert "No ingredients available yet." alert_type="info" %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if selected_ingredients or form.search.value %}
+                <div class="mt-3">
+                    {% url 'recipes' as recipes_url %}
+                    {% bootstrap_button "Clear All Filters" button_type="link" href=recipes_url button_class="btn-outline-secondary" %}
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2 class="h4 mb-4">
+                {% if selected_ingredients or form.search.value %}
+                    Filtered Recipes ({{ recipes.count }})
+                {% else %}
+                    All Recipes ({{ recipes.count }})
+                {% endif %}
+            </h2>
+        </div>
+
+        {% for recipe in recipes %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                {% if recipe.image %}
+                <div class="card-img-top recipe-image-container">
+                    <img src="{{ recipe.image.url }}" class="img-fluid rounded-top" alt="{{ recipe.name }}">
+                </div>
+                {% else %}
+                <div class="card-img-top recipe-image-placeholder bg-light d-flex align-items-center justify-content-center">
+                    <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
+                </div>
+                {% endif %}
+                
+                <div class="card-body">
+                    <h3 class="h5 card-title">{{ recipe.name }}</h3>
+                    <p class="card-text small text-muted">
+                        <i class="bi bi-clock"></i> Prep Time: {{ recipe.preparation_time }} mins
+                    </p>
+                    <p class="card-text small">
+                        <strong>Ingredients:</strong><br>
+                        {% for ingredient in recipe.ingredients.all|slice:":3" %}
+                            <span class="badge bg-light text-dark">{{ ingredient.name }}</span>
+                        {% endfor %}
+                        {% if recipe.ingredients.count > 3 %}
+                            <span class="badge bg-light text-dark">+{{ recipe.ingredients.count|add:"-3" }} more</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="card-footer bg-white">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="collapse" data-bs-target="#recipe-{{ recipe.id }}">
+                        View Recipe
+                    </button>
+                    
+                    <div class="collapse mt-3" id="recipe-{{ recipe.id }}">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="h6 mb-3">Instructions</h4>
+                                {{ recipe.instructions|linebreaks }}
+                                
+                                <h4 class="h6 mb-2 mt-4">Nutrition Info</h4>
+                                <div class="row text-center">
+                                    <div class="col-4">
+                                        <small class="d-block text-muted">Calories</small>
+                                        <strong>{{ recipe.calories }}</strong>
+                                    </div>
+                                    <div class="col-4">
+                                        <small class="d-block text-muted">Protein</small>
+                                        <strong>{{ recipe.protein }}g</strong>
+                                    </div>
+                                    <div class="col-4">
+                                        <small class="d-block text-muted">Carbs</small>
+                                        <strong>{{ recipe.carbs }}g</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            {% bootstrap_alert "No recipes found matching your criteria." alert_type="info" %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% bootstrap_javascript %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('ingredient-form');
+    const ingredients = form.querySelectorAll('input[type="checkbox"]');
+    
+    ingredients.forEach(ingredient => {
+        ingredient.addEventListener('change', () => {
+            form.classList.add('loading');
+            form.submit();
+        });
+    });
+    
+    // Track active collapses and their timers
+    const activeCollapses = new Map();
+    
+    // Handle nutritional info button clicks
+    const nutritionalButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+    nutritionalButtons.forEach(button => {
+        // Get the target collapse element ID
+        const targetId = button.getAttribute('data-bs-target').substring(1);
+        const collapseElement = document.getElementById(targetId);
+        
+        // Handle collapse show event
+        collapseElement.addEventListener('shown.bs.collapse', function() {
+            // Clear any existing timer for this collapse
+            if (activeCollapses.has(targetId)) {
+                clearTimeout(activeCollapses.get(targetId));
+            }
+            
+            // Set a new timer to close after 5 seconds
+            const timer = setTimeout(() => {
+                // Use Bootstrap's collapse API to hide the element
+                const bsCollapse = bootstrap.Collapse.getInstance(collapseElement);
+                if (bsCollapse) {
+                    bsCollapse.hide();
+                }
+                activeCollapses.delete(targetId);
+            }, 3000);
+            
+            // Store the timer reference
+            activeCollapses.set(targetId, timer);
+        });
+        
+        // Clear timer when manually hidden
+        collapseElement.addEventListener('hide.bs.collapse', function() {
+            if (activeCollapses.has(targetId)) {
+                clearTimeout(activeCollapses.get(targetId));
+                activeCollapses.delete(targetId);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

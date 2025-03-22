@@ -1,0 +1,130 @@
+<!-- core/templates/core/diet_plan_result.html -->
+
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Your Personalized Diet Plan - Fuel My Semester{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Your Personalized Diet Plan</h1>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Your Information</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ user_profile.name }}</p>
+                    <p><strong>Age:</strong> {{ user_profile.age }}</p>
+                    <p><strong>Gender:</strong> {{ user_profile.get_gender_display }}</p>
+                    <p><strong>Height:</strong> {{ user_profile.height }} cm</p>
+                    <p><strong>Weight:</strong> {{ user_profile.weight }} kg</p>
+                    <p><strong>Profile:</strong> {{ user_profile.get_user_type_display }}</p>
+                    <p><strong>Activity Level:</strong> {{ user_profile.get_activity_level_display }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Diet Recommendations</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h3 class="h6">Daily Caloric Needs</h3>
+                        <p class="display-6 text-primary">{{ diet_plan.daily_calories }} calories</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="h6">Recommended Macronutrients</h3>
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <p class="mb-0"><strong>Protein</strong><br>{{ diet_plan.macros.protein }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <p class="mb-0"><strong>Carbs</strong><br>{{ diet_plan.macros.carbs }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <p class="mb-0"><strong>Fats</strong><br>{{ diet_plan.macros.fats }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="h6">Meal Plan Suggestions</h3>
+                        <div class="mb-2">
+                            <h4 class="h6 text-primary">Breakfast</h4>
+                            <p>{{ diet_plan.meal_plan.breakfast }}</p>
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="h6 text-primary">Lunch</h4>
+                            <p>{{ diet_plan.meal_plan.lunch }}</p>
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="h6 text-primary">Dinner</h4>
+                            <p>{{ diet_plan.meal_plan.dinner }}</p>
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="h6 text-primary">Snacks</h4>
+                            <p>{{ diet_plan.meal_plan.snacks }}</p>
+                        </div>
+                        
+                        {% if diet_plan.meal_plan.pre_workout %}
+                        <div class="mb-2">
+                            <h4 class="h6 text-primary">Pre-Workout</h4>
+                            <p>{{ diet_plan.meal_plan.pre_workout }}</p>
+                        </div>
+                        {% endif %}
+                        
+                        {% if diet_plan.meal_plan.post_workout %}
+                        <div class="mb-2">
+                            <h4 class="h6 text-primary">Post-Workout</h4>
+                            <p>{{ diet_plan.meal_plan.post_workout }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Next Steps</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <h3 class="h6">Explore Easy Recipes</h3>
+                            <p>Check out our collection of quick and easy recipes tailored to your dietary needs.</p>
+                            <a href="{% url 'recipes' %}" class="btn btn-primary">View Recipes</a>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="h6">Learn About Mindful Eating</h3>
+                            <p>Discover how mindful eating practices can enhance your nutrition journey.</p>
+                            <a href="{% url 'mindful_eating' %}" class="btn btn-outline-primary">Mindful Eating Tips</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

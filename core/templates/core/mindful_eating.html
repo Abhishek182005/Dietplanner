@@ -1,0 +1,101 @@
+<!-- core/templates/core/mindful_eating.html -->
+
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Mindful Eating - Fuel My Semester{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Mindful Eating</h1>
+    
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <p class="lead">Learn how mindful eating practices can improve your relationship with food and enhance your overall well-being.</p>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Benefits of Mindful Eating</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h3 class="h6 text-primary">Reduced Stress</h3>
+                            <p>Mindful eating helps reduce stress by encouraging you to slow down and be present during meals, activating your body's relaxation response.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h3 class="h6 text-primary">Improved Digestion</h3>
+                            <p>When you eat mindfully, you chew more thoroughly and eat at a slower pace, which can improve digestion and reduce digestive discomfort.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h3 class="h6 text-primary">Better Food Choices</h3>
+                            <p>Being more aware of how different foods affect your body can naturally guide you toward more nutritious choices.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h3 class="h6 text-primary">Healthier Relationship with Food</h3>
+                            <p>Mindful eating helps you recognize hunger and fullness cues, reducing overeating and emotional eating patterns.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h3 class="h6 text-primary">Enhanced Enjoyment</h3>
+                            <p>By fully experiencing the flavors, textures, and aromas of your food, you can find greater satisfaction in eating.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title h5 mb-0">Guided Meditations</h2>
+                </div>
+                <div class="card-body">
+                    <p>Access our collection of guided meditations designed to help you develop mindful eating habits.</p>
+                    
+                    <div class="list-group mb-4">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3 class="h6 mb-1">Pre-Meal Awareness Meditation</h3>
+                                <small>5 min</small>
+                            </div>
+                            <p class="mb-1 small">Center yourself before eating to enhance your mealtime experience.</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3 class="h6 mb-1">Mindful Eating Practice</h3>
+                                <small>10 min</small>
+                            </div>
+                            <p class="mb-1 small">Learn to eat slowly and fully experience your food.</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3 class="h6 mb-1">Hunger and Fullness Awareness</h3>
+                                <small>7 min</small>
+                            </div>
+                            <p class="mb-1 small">Develop a better understanding of your body's hunger signals.</p>
+                        </a>
+                    </div>
+                    
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h3 class="h6">Quick Mindful Eating Exercise</h3>
+                            <ol class="small">
+                                <li>Before eating, take three deep breaths.</li>
+                                <li>Observe your food - notice colors, textures, and aromas.</li>
+                                <li>Take small bites and chew thoroughly.</li>
+                                <li>Put your utensils down between bites.</li>
+                                <li>Notice flavors and textures as you eat.</li>
+                                <li>Check in with your fullness level throughout the meal.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
