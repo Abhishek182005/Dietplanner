@@ -1,5 +1,3 @@
-<!-- core/templates/core/diet_plan_result.html -->
-
 {% extends 'core/base.html' %}
 {% load django_bootstrap5 %}
 
@@ -10,6 +8,7 @@
     <h1 class="mb-4">Your Personalized Diet Plan</h1>
     
     <div class="row">
+        <!-- User Information Card -->
         <div class="col-md-4 mb-4">
             <div class="card shadow h-100">
                 <div class="card-header bg-primary text-white">
@@ -21,108 +20,124 @@
                     <p><strong>Gender:</strong> {{ user_profile.get_gender_display }}</p>
                     <p><strong>Height:</strong> {{ user_profile.height }} cm</p>
                     <p><strong>Weight:</strong> {{ user_profile.weight }} kg</p>
+                    <p><strong>Goal:</strong> {{ user_profile.get_goal_display }}</p>
                     <p><strong>Profile:</strong> {{ user_profile.get_user_type_display }}</p>
                     <p><strong>Activity Level:</strong> {{ user_profile.get_activity_level_display }}</p>
                 </div>
             </div>
         </div>
         
+        <!-- Diet Recommendations Card -->
         <div class="col-md-8 mb-4">
             <div class="card shadow h-100">
                 <div class="card-header bg-primary text-white">
                     <h2 class="card-title h5 mb-0">Diet Recommendations</h2>
                 </div>
                 <div class="card-body">
-                    <div class="mb-4">
-                        <h3 class="h6">Daily Caloric Needs</h3>
-                        <p class="display-6 text-primary">{{ diet_plan.daily_calories }} calories</p>
+                    <!-- Health Metrics Section -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h3 class="h6">BMI</h3>
+                                    <p class="display-6 text-primary mb-0">{{ user_profile.calculate_bmi }}</p>
+                                    <small class="text-muted">{{ user_profile.get_bmi_category }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h3 class="h6">BMR</h3>
+                                    <p class="display-6 text-primary mb-0">{{ user_profile.calculate_bmr|floatformat:0 }}</p>
+                                    <small class="text-muted">calories/day at rest</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h3 class="h6">Daily Target</h3>
+                                    <p class="display-6 text-primary mb-0">{{ diet_plan.daily_calories }}</p>
+                                    <small class="text-muted">calories/day</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                   <div class="mb-4">
-    <h3 class="h6">Recommended Macronutrients</h3>
-    <div class="row text-center">
-        <div class="col-md-4 mb-2">
-            <div class="card bg-light">
-                <div class="card-body py-2">
-                    <p class="mb-0"><strong>Protein</strong><br>
-                        {{ diet_plan.macros.protein }}<br>
-                        <small class="text-muted">{{ diet_plan.macro_ratios.protein }}</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-2">
-            <div class="card bg-light">
-                <div class="card-body py-2">
-                    <p class="mb-0"><strong>Carbs</strong><br>
-                        {{ diet_plan.macros.carbs }}<br>
-                        <small class="text-muted">{{ diet_plan.macro_ratios.carbs }}</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-2">
-            <div class="card bg-light">
-                <div class="card-body py-2">
-                    <p class="mb-0"><strong>Fats</strong><br>
-                        {{ diet_plan.macros.fats }}<br>
-                        <small class="text-muted">{{ diet_plan.macro_ratios.fats }}</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add a progress bar visualization -->
-    <div class="progress mt-3" style="height: 25px;">
-        <div class="progress-bar bg-success" role="progressbar" 
-             style="width: {{ diet_plan.macro_ratios.protein }};" 
-             title="Protein">{{ diet_plan.macro_ratios.protein }}</div>
-        <div class="progress-bar bg-primary" role="progressbar" 
-             style="width: {{ diet_plan.macro_ratios.carbs }};" 
-             title="Carbs">{{ diet_plan.macro_ratios.carbs }}</div>
-        <div class="progress-bar bg-warning" role="progressbar" 
-             style="width: {{ diet_plan.macro_ratios.fats }};" 
-             title="Fats">{{ diet_plan.macro_ratios.fats }}</div>
-    </div>
-</div>
+
+                    <!-- Goal Summary -->
+                    <div class="alert alert-info mb-4">
+                        <h3 class="h6 mb-2">Your Goal: {{ user_profile.get_goal_display }}</h3>
+                        <p class="mb-0 small">Based on your {{ user_profile.get_activity_level_display }} activity level, 
+                            we've adjusted your calories to help you {{ user_profile.get_goal_display|lower }}.</p>
+                    </div>
+
+                    <!-- Macronutrients Section -->
+                    <div class="mb-4">
+                        <h3 class="h6">Recommended Macronutrients</h3>
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <p class="mb-0"><strong>Protein</strong><br>
+                                            {{ diet_plan.macros.protein }}<br>
+                                            <small class="text-muted">{{ diet_plan.macro_ratios.protein }}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <p class="mb-0"><strong>Carbs</strong><br>
+                                            {{ diet_plan.macros.carbs }}<br>
+                                            <small class="text-muted">{{ diet_plan.macro_ratios.carbs }}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <p class="mb-0"><strong>Fats</strong><br>
+                                            {{ diet_plan.macros.fats }}<br>
+                                            <small class="text-muted">{{ diet_plan.macro_ratios.fats }}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Macro Distribution Progress Bar -->
+                        <div class="progress mt-3" style="height: 25px;">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ diet_plan.macro_ratios.protein }};" 
+                                 title="Protein">{{ diet_plan.macro_ratios.protein }}</div>
+                            <div class="progress-bar bg-primary" role="progressbar" 
+                                 style="width: {{ diet_plan.macro_ratios.carbs }};" 
+                                 title="Carbs">{{ diet_plan.macro_ratios.carbs }}</div>
+                            <div class="progress-bar bg-warning" role="progressbar" 
+                                 style="width: {{ diet_plan.macro_ratios.fats }};" 
+                                 title="Fats">{{ diet_plan.macro_ratios.fats }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Meal Plan Section -->
                     <div>
                         <h3 class="h6">Meal Plan Suggestions</h3>
-                        <div class="mb-2">
-                            <h4 class="h6 text-primary">Breakfast</h4>
-                            <p>{{ diet_plan.meal_plan.breakfast }}</p>
-                        </div>
-                        <div class="mb-2">
-                            <h4 class="h6 text-primary">Lunch</h4>
-                            <p>{{ diet_plan.meal_plan.lunch }}</p>
-                        </div>
-                        <div class="mb-2">
-                            <h4 class="h6 text-primary">Dinner</h4>
-                            <p>{{ diet_plan.meal_plan.dinner }}</p>
-                        </div>
-                        <div class="mb-2">
-                            <h4 class="h6 text-primary">Snacks</h4>
-                            <p>{{ diet_plan.meal_plan.snacks }}</p>
-                        </div>
-                        
-                        {% if diet_plan.meal_plan.pre_workout %}
-                        <div class="mb-2">
-                            <h4 class="h6 text-primary">Pre-Workout</h4>
-                            <p>{{ diet_plan.meal_plan.pre_workout }}</p>
-                        </div>
-                        {% endif %}
-                        
-                        {% if diet_plan.meal_plan.post_workout %}
-                        <div class="mb-2">
-                            <h4 class="h6 text-primary">Post-Workout</h4>
-                            <p>{{ diet_plan.meal_plan.post_workout }}</p>
-                        </div>
-                        {% endif %}
+                        {% for meal, content in diet_plan.meal_plan.items %}
+                            <div class="mb-2">
+                                <h4 class="h6 text-primary">{{ meal|title }}</h4>
+                                <p>{{ content }}</p>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <!-- Next Steps Section -->
     <div class="row mt-4">
         <div class="col-12">
             <div class="card shadow">
