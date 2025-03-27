@@ -38,33 +38,53 @@
                         <p class="display-6 text-primary">{{ diet_plan.daily_calories }} calories</p>
                     </div>
                     
-                    <div class="mb-4">
-                        <h3 class="h6">Recommended Macronutrients</h3>
-                        <div class="row text-center">
-                            <div class="col-md-4 mb-2">
-                                <div class="card bg-light">
-                                    <div class="card-body py-2">
-                                        <p class="mb-0"><strong>Protein</strong><br>{{ diet_plan.macros.protein }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-2">
-                                <div class="card bg-light">
-                                    <div class="card-body py-2">
-                                        <p class="mb-0"><strong>Carbs</strong><br>{{ diet_plan.macros.carbs }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-2">
-                                <div class="card bg-light">
-                                    <div class="card-body py-2">
-                                        <p class="mb-0"><strong>Fats</strong><br>{{ diet_plan.macros.fats }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                   <div class="mb-4">
+    <h3 class="h6">Recommended Macronutrients</h3>
+    <div class="row text-center">
+        <div class="col-md-4 mb-2">
+            <div class="card bg-light">
+                <div class="card-body py-2">
+                    <p class="mb-0"><strong>Protein</strong><br>
+                        {{ diet_plan.macros.protein }}<br>
+                        <small class="text-muted">{{ diet_plan.macro_ratios.protein }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card bg-light">
+                <div class="card-body py-2">
+                    <p class="mb-0"><strong>Carbs</strong><br>
+                        {{ diet_plan.macros.carbs }}<br>
+                        <small class="text-muted">{{ diet_plan.macro_ratios.carbs }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card bg-light">
+                <div class="card-body py-2">
+                    <p class="mb-0"><strong>Fats</strong><br>
+                        {{ diet_plan.macros.fats }}<br>
+                        <small class="text-muted">{{ diet_plan.macro_ratios.fats }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add a progress bar visualization -->
+    <div class="progress mt-3" style="height: 25px;">
+        <div class="progress-bar bg-success" role="progressbar" 
+             style="width: {{ diet_plan.macro_ratios.protein }};" 
+             title="Protein">{{ diet_plan.macro_ratios.protein }}</div>
+        <div class="progress-bar bg-primary" role="progressbar" 
+             style="width: {{ diet_plan.macro_ratios.carbs }};" 
+             title="Carbs">{{ diet_plan.macro_ratios.carbs }}</div>
+        <div class="progress-bar bg-warning" role="progressbar" 
+             style="width: {{ diet_plan.macro_ratios.fats }};" 
+             title="Fats">{{ diet_plan.macro_ratios.fats }}</div>
+    </div>
+</div>
                     <div>
                         <h3 class="h6">Meal Plan Suggestions</h3>
                         <div class="mb-2">

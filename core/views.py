@@ -93,41 +93,52 @@ def generate_diet_plan(user_profile):
         bmr = 447.593 + (9.247 * user_profile.weight) + (3.098 * user_profile.height) - (4.330 * user_profile.age)
     
     # Apply activity factor
-    if user_profile.activity_level == 'low':
-        daily_calories = bmr * 1.2
-    elif user_profile.activity_level == 'moderate':
-        daily_calories = bmr * 1.55
-    else:  # high activity
-        daily_calories = bmr * 1.725
-    
-    # Adjust for student vs working individual (simplified example)
-    if user_profile.user_type == 'student':
-        meal_plan = {
-            'breakfast': 'Quick and nutritious breakfast options',
-            'lunch': 'Easy-to-pack or campus-friendly lunches',
-            'dinner': 'Simple, budget-friendly dinner ideas',
-            'snacks': 'Energy-boosting snacks for study sessions'
-        }
-    else:  # working individual
-        meal_plan = {
-            'breakfast': 'Protein-rich breakfast options',
-            'lunch': 'Balanced work-friendly lunches',
-            'dinner': 'Nutrient-dense dinner ideas',
-            'snacks': 'Healthy snacks for busy schedules'
-        }
-    
-    # If high activity, adjust for sports/gym needs
+    activity_factors = {
+        'low': 1.2,
+        'moderate': 1.55,
+        'high': 1.725
+    }
+    daily_calories = bmr * activity_factors[user_profile.activity_level]
+
+    # Calculate macronutrients based on body weight and activity level
+    # Protein: 1.6-2.2g per kg for high activity, 1.2-1.6g for moderate, 0.8-1.2g for low
+    protein_factors = {'low': 1.0, 'moderate': 1.4, 'high': 2.0}
+    protein_per_kg = protein_factors[user_profile.activity_level]
+    daily_protein = user_profile.weight * protein_per_kg  # grams
+
+    # Fat: 20-35% of daily calories (using 25% as baseline)
+    # 1g fat = 9 calories
+    daily_fat = (daily_calories * 0.25) / 9  # grams
+
+    # Carbs: Remaining calories after protein and fat
+    # 1g carbs = 4 calories
+    protein_calories = daily_protein * 4
+    fat_calories = daily_fat * 9
+    carb_calories = daily_calories - (protein_calories + fat_calories)
+    daily_carbs = carb_calories / 4  # grams
+
+    # Rest of the meal plan logic remains the same
+    meal_plan = {
+        'breakfast': 'Quick and nutritious breakfast options',
+        'lunch': 'Easy-to-pack or campus-friendly lunches',
+        'dinner': 'Simple, budget-friendly dinner ideas',
+        'snacks': 'Energy-boosting snacks for study sessions'
+    }
     if user_profile.activity_level == 'high':
         meal_plan['pre_workout'] = 'Pre-workout nutrition recommendations'
         meal_plan['post_workout'] = 'Post-workout recovery meals'
-        meal_plan['protein_needs'] = 'Higher protein intake recommendations'
     
     return {
         'daily_calories': round(daily_calories),
         'meal_plan': meal_plan,
         'macros': {
-            'protein': f"{round(daily_calories * 0.3 / 4)} g",
-            'carbs': f"{round(daily_calories * 0.5 / 4)} g",
-            'fats': f"{round(daily_calories * 0.2 / 9)} g"
+            'protein': f"{round(daily_protein)} g",
+            'carbs': f"{round(daily_carbs)} g",
+            'fats': f"{round(daily_fat)} g"
+        },
+        'macro_ratios': {
+            'protein': f"{round((protein_calories/daily_calories)*100)}%",
+            'carbs': f"{round((carb_calories/daily_calories)*100)}%",
+            'fats': f"{round((fat_calories/daily_calories)*100)}%"
         }
     }
